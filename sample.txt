@@ -1,0 +1,1 @@
+This is a sample project to check the concourse tutorial to check the clone using the pipeline.
