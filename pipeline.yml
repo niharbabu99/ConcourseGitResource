@@ -1,0 +1,44 @@
+---
+resources:
+
+- name: git_push 
+  type: git
+  source:
+    uri: git@github.com:niharbabu99/testingconcourse.git
+    private_key: ((p_key))
+    branch: master
+
+jobs:
+- name: gitpush-test
+  serial: true
+  plan:
+  - get: git_push
+  - task: check
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: ndevathi/ubuntu_bosh}
+      inputs:
+      - name: git_push
+      outputs:
+      - name: git_push_modified
+      run:
+         path: bash
+         args:
+         - -exec
+         - |
+           set -eux pipefail
+           git config --global user.email "ci@localhost"
+           git config --global user.name "CI Bot"
+
+           git clone git_push git_push_modified
+           pushd git_push_modified
+           echo "adding new file" > file1.txt
+           git add -A && git commit -m "Added New file"
+           popd
+           sleep 1m
+  - put: git_push
+    params:
+      repository: git_push_modified
+      rebase: true
