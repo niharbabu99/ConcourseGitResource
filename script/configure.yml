@@ -1,0 +1,13 @@
+---
+   
+platform: linux
+image_resource:
+  type: docker-image
+  source: {repository: ndevathi/ubuntu_bosh}
+inputs:
+- name: git_push
+outputs:
+- name: ((ouputname))
+run:
+  path: git_push/script/configure.sh
+
