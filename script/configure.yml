@@ -7,7 +7,7 @@ image_resource:
 inputs:
 - name: git_push
 outputs:
-- name: ((ouputname))
+- name: ((oupu))
 run:
   path: git_push/script/configure.sh
 
