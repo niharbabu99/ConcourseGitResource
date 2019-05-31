@@ -13,7 +13,7 @@ jobs:
   serial: true
   plan:
   - get: git_push
-  - task: check
+  - task: check_test
     file: git_push/script/configure.yml
     vars:
       output: ((ouputname))
